@@ -42,7 +42,12 @@ public class PayEveryone implements ModInitializer {
 			return 1;
 		})));});
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("BuyOutAuctionHouse").executes(context -> {
-			BuyOutAH();
+			if (STOPAHG) {
+				STOPAHG = false;
+			}
+			else {
+				BuyOutAH();
+			}
 			return 1;
 		}));});
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("STOPWHATDOING").executes(context -> {
