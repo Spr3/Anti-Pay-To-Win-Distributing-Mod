@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.ClickType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class PayEveryone implements ModInitializer {
 	private int monievalue = 0,index = 0,tickcounting = 0;
 	private int tickwait = 20;
 	private boolean STOPPaying = false, STOPAHG = false;
+	
+	private boolean pickeditem = false;
+	private int positionAH = 0, positionBuyfromah = 0;
 
 	@Override
 	public void onInitialize() {
@@ -60,6 +64,11 @@ public class PayEveryone implements ModInitializer {
 			tickcounting = 0;
 			return 1;
 		})));});
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("SetUpAuctionHouseBuying").then(argument("first position", IntegerArgumentType.integer()).then(argument("second position", IntegerArgumentType.integer()).executes(context -> {
+			positionAH = IntegerArgumentType.getInteger(context, "first position");
+			positionBuyfromah = IntegerArgumentType.getInteger(context, "second position");
+			return 1;
+		}))));});
 	}
 
 	private void paypeople(String element) {
@@ -104,7 +113,14 @@ public class PayEveryone implements ModInitializer {
 			if (tickcounting >= tickwait) {
 				tickcounting = 0;
 				try {
-					client.interactionManager.clickSlot(player.currentScreenHandler.syncId, 0, 0,SlotActionType.PICKUP,player);
+					if (!pickeditem){
+						pickeditem = true;
+						client.interactionManager.clickSlot(player.currentScreenHandler.syncId, positionAH, 0,SlotActionType.PICKUP,player);
+					}
+					else {
+						pickeditem = false;
+						client.interactionManager.clickSlot(player.currentScreenHandler.syncId, positionBuyfromah, 0,SlotActionType.PICKUP,player);
+					}
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
