@@ -29,7 +29,7 @@ public class PayEveryone implements ModInitializer {
 	private int monievalue = 0,index = 0,tickcounting = 0;
 	private int tickwait = 20;
 	private boolean STOPPaying = false, STOPAHG = false;
-	
+
 	private boolean pickeditem = false;
 	private int positionAH = 0, positionBuyfromah = 0;
 
@@ -120,6 +120,7 @@ public class PayEveryone implements ModInitializer {
 					else {
 						pickeditem = false;
 						client.interactionManager.clickSlot(player.currentScreenHandler.syncId, positionBuyfromah, 0,SlotActionType.PICKUP,player);
+						client.player.networkHandler.sendChatCommand("ah");
 					}
 				} catch (Exception e) {
 					throw new RuntimeException(e);
