@@ -11,3 +11,5 @@ What Each Command Does:
 /STOPWHATDOING - Stops "PayAll" and "BuyOutAuctionHouse"
 
 /ChangeTicks {value} - changes the ammount of time the client waits till it pays the next person or buys the next itme. {value} is the amount of ticks till the next command
+
+/SetUpAuctionHouseBuying {value} {value} - Sets up buying the Auction house - first value is the position of the items - second value is the position of the buy button
