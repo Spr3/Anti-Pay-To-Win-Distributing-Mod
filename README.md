@@ -2,6 +2,9 @@
 
 Youtube Channel: https://www.youtube.com/@Sapire
 
+Duping Mod: https://github.com/Coderx-Gamer/ui-utils
+Use the black text blox and run /STOPWHATDOING to get out of the loop
+
 What Each Command Does:
 
 /PayAll {value} - equally pays everyone - {value} is the ammount of money you have
