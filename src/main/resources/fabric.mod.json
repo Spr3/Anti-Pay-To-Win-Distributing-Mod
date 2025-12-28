@@ -11,7 +11,7 @@
 		"homepage": "https://www.youtube.com/@Sapire",
 		"sources": "https://github.com/Spr3/Anti-Pay-To-Win-Distributing-Mod"
 	},
-	"license": "CC0-1.0",
+	"license": "GPL-3.0",
 	"icon": "assets/payeveryone/icon.png",
 	"environment": "*",
 	"entrypoints": {
