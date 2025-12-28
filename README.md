@@ -9,11 +9,20 @@ What Each Command Does:
 
 /PayAll {value} - equally pays everyone - {value} is the ammount of money you have
 
-# USE /SetUpAuctionHouseBuying before /BuyOutAuctionHouse
+------------------------------------------------------------------------------
+# How to Buy Out The Auction House
+
+Use SetUpAuctionHouseBuying First then BuyOutAuctionHouse
 
 /SetUpAuctionHouseBuying {value} {value} - Sets up buying the Auction house - first value is the position of the items - second value is the position of the buy button
 
 /BuyOutAuctionHouse - Starts to buy out the auction house
+
+If your inventory is full it will stop trying to buy out the Auction house
+
+If the same item has tried to be bought 4 times it will stop
+
+------------------------------------------------------------------------------
 
 /STOPWHATDOING - Stops "PayAll" and "BuyOutAuctionHouse"
 
