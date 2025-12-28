@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
@@ -72,7 +74,11 @@ public class PayEveryone implements ModInitializer {
 	}
 
 	private void paypeople(String element) {
-		client.player.networkHandler.sendChatCommand("pay " + element + " " + (int) Math.floor(monievalue/client.getNetworkHandler().getPlayerList().size()));
+		Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+		Matcher matcher = pattern.matcher(element);
+		if (!matcher.find()) {
+			client.player.networkHandler.sendChatCommand("pay " + element + " " + (int) Math.floor(monievalue/client.getNetworkHandler().getPlayerList().size()));
+		}
 	}
 
 	private void grabplayers() {
