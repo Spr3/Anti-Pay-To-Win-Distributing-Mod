@@ -10,8 +10,10 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.ClickType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -35,6 +37,9 @@ public class PayEveryone implements ModInitializer {
 	private boolean pickeditem = false;
 	private int positionAH = 0, positionBuyfromah = 0;
 
+	Item theitem = Items.AIR;
+	private int sameitemcoundter = 1;
+
 	@Override
 	public void onInitialize() {
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("PayAll").then(argument("value", IntegerArgumentType.integer()).executes(context -> {
@@ -48,12 +53,9 @@ public class PayEveryone implements ModInitializer {
 			return 1;
 		})));});
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("BuyOutAuctionHouse").executes(context -> {
-			if (STOPAHG) {
-				STOPAHG = false;
-			}
-			else {
-				BuyOutAH();
-			}
+			STOPAHG = false;
+			sameitemcoundter = 1;
+			BuyOutAH();
 			return 1;
 		}));});
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {dispatcher.register(literal("STOPWHATDOING").executes(context -> {
@@ -72,6 +74,7 @@ public class PayEveryone implements ModInitializer {
 			return 1;
 		}))));});
 	}
+
 
 	private void paypeople(String element) {
 		Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
@@ -112,7 +115,7 @@ public class PayEveryone implements ModInitializer {
 	private void AHloop() {
 		ClientPlayerEntity player = client.player;
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (STOPAHG) {
+			if (STOPAHG || isInventoryFull()) {
 				return;
 			}
 			tickcounting++;
@@ -120,6 +123,18 @@ public class PayEveryone implements ModInitializer {
 				tickcounting = 0;
 				try {
 					if (!pickeditem){
+						if (1==1) {
+							ItemStack slotposition = client.player.getInventory().getStack(positionAH);
+							if (theitem == slotposition.getItem()) {
+								sameitemcoundter++;
+								if (sameitemcoundter >= 5) {
+									STOPAHG = true;
+								}
+							} else {
+								theitem = slotposition.getItem();
+								sameitemcoundter = 1;
+							}
+						}
 						pickeditem = true;
 						client.interactionManager.clickSlot(player.currentScreenHandler.syncId, positionAH, 0,SlotActionType.PICKUP,player);
 					}
@@ -133,5 +148,18 @@ public class PayEveryone implements ModInitializer {
 				}
 			}
 		});
+	}
+
+	public boolean isInventoryFull() {
+		if (client.player != null) {
+			for (int slot = 9; slot < 34; slot++) {
+				ItemStack slotposition = client.player.getInventory().getStack(slot);
+				if (slotposition.getItem() == Items.AIR){
+					return false;
+				}
+			}
+		}
+		STOPAHG = true;
+		return true;
 	}
 }
