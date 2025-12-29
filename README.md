@@ -29,6 +29,12 @@ If the same item has tried to be bought 4 times it will stop
 
 /STOPWHATDOING - Stops "PayAll" and "BuyOutAuctionHouse"
 
+/Ignore - Will skip these players on the server when pay players or trying to tp to them
+
+/IgnoredPlayers - Will show you what players are being ignored
+
+/TELEPORTTOPLAYERS - Send Teleport Request to all players
+
 /ChangeTicks {value} - changes the ammount of time the client waits till it pays the next person or buys the next item. {value} is the amount of ticks till the next command
 
 
