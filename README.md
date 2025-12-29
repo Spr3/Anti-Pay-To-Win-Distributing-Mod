@@ -27,7 +27,7 @@ If the same item has tried to be bought 4 times it will stop
 
 ------------------------------------------------------------------------------
 
-/STOPWHATDOING - Stops "PayAll" and "BuyOutAuctionHouse"
+/STOPWHATDOING - Stops "PayAll", "BuyOutAuctionHouse" and "TELEPORTTOPLAYERS"
 
 /Ignore - Will skip these players on the server when pay players or trying to tp to them
 
